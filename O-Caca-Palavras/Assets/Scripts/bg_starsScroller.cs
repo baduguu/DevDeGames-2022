@@ -7,7 +7,7 @@ public class bg_starsScroller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      	transform.position = new Vector3(Random.Range(-5f, 5), transform.position.y);  
+      	transform.position = new Vector3(Random.Range(-3.3f, 3.3f), transform.position.y);  
     }
 
     // Update is called once per frame
@@ -15,8 +15,8 @@ public class bg_starsScroller : MonoBehaviour
     {
         transform.position += new Vector3(0, -1 * Time.deltaTime);
 
-	if (transform.position.y < -15) {
-		transform.position = new Vector3(Random.Range(-5f, 5f), 15);
+	if (transform.position.y < -11.5f) {
+		transform.position = new Vector3(Random.Range(-3.3f, 3.3f), 11.5f);
 	}
     }
 }
