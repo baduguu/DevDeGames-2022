@@ -2,73 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shipMovement : MonoBehaviour
-{
-	public Transform player;
-	public float speed = 4.0f;
-	private bool touchStart = false;
-	private Vector2 pointA; // pointA sera a posicao inicial onde o usuario clicou, e ali onde fica centralizado o joystick
-	private Vector2 pointB; // pointB e a posicao para onde o usuario moveu o click, e essa direcao que se considera para a movimentacao da nave
-	public Transform joystickBg;
-	public Transform joystickTouch;
+public class shipMovement : MonoBehaviour {
+    public Transform player;
+    public float speed = 15.0f;
 
-	private float bgWidth;
-    private float bgHeight;
+    public Transform circle;
+    public Transform outerCircle;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		pointA = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/5, Screen.height/10, Camera.main.transform.position.z));
+    private Vector2 startingPoint;
+    private int leftTouch = 99;
 
-		joystickTouch.transform.position = pointA;
-		joystickBg.transform.position = pointA;
-		joystickTouch.GetComponent<SpriteRenderer>().enabled = true;
-		joystickBg.GetComponent<SpriteRenderer>().enabled = true;
-
-		bgWidth = joystickBg.transform.GetComponent<SpriteRenderer>().bounds.extents.x;
-        bgHeight = joystickBg.transform.GetComponent<SpriteRenderer>().bounds.extents.y;
-
-		
-    }
-
+    
     // Update is called once per frame
-    void Update()
-    {
-	// movimenta via setas do teclado
-	// moveCharacter(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+    void Update () {
+        int i = 0;
+        while(i < Input.touchCount){
+            Touch t = Input.GetTouch(i);
+            Vector2 touchPos = getTouchPosition(t.position);
+            if(t.phase == TouchPhase.Began){
+                if (t.position.x < (Screen.width / 2) && t.position.y < (Screen.height / 3)) {
+                    leftTouch = t.fingerId;
+                    startingPoint = touchPos;
+                }
+            }else if(t.phase == TouchPhase.Moved && leftTouch == t.fingerId){
+                Vector2 offset = touchPos - startingPoint;
+                Vector2 direction = Vector2.ClampMagnitude(offset, 1.0f);
 
-	// movimenta via joystick
+                moveCharacter(direction);
 
-	if(Input.GetMouseButton(0)  && Camera.main.ScreenToWorldPoint(Input.mousePosition).x < joystickBg.transform.position.x + bgWidth*1.5
-								&& Camera.main.ScreenToWorldPoint(Input.mousePosition).x > joystickBg.transform.position.x - bgWidth*1.5
-								&& Camera.main.ScreenToWorldPoint(Input.mousePosition).y < joystickBg.transform.position.y + bgHeight*1.5
-								&& Camera.main.ScreenToWorldPoint(Input.mousePosition).y > joystickBg.transform.position.y - bgHeight*1.5) {
-		touchStart = true;
-		pointB = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
-	}
-	else {
-		touchStart = false;
-	}
+                circle.transform.position = new Vector2(outerCircle.transform.position.x + direction.x, outerCircle.transform.position.y + direction.y);
+
+            }else if(t.phase == TouchPhase.Ended && leftTouch == t.fingerId){
+                leftTouch = 99;
+                circle.transform.position = new Vector2(outerCircle.transform.position.x, outerCircle.transform.position.y);
+            }
+            ++i;
+        }
+
+    }
+    Vector2 getTouchPosition(Vector2 touchPosition){
+        return GetComponent<Camera>().ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, transform.position.z));
     }
 
-    private void FixedUpdate() {
-	if (touchStart) {
-		Vector2 offset = pointB - pointA;
-		Vector2 direction = Vector2.ClampMagnitude(offset, 1.0f);
-		moveCharacter(direction);
-
-		joystickTouch.transform.position = new Vector2(pointA.x + direction.x, pointA.y + direction.y);
-	}
-	else{
-		joystickTouch.transform.position = new Vector2(pointA.x, pointA.y);
-	}
+    void moveCharacter(Vector2 direction){
+        player.Translate(direction * speed * Time.deltaTime);
     }
-
-
-
-
-
-	void moveCharacter(Vector2 direction) {
-		player.Translate(direction * speed * Time.deltaTime);
-	}
 }
