@@ -13,6 +13,7 @@ public class shipMovement : MonoBehaviour {
     private int leftTouch = 99;
 
     public GameObject bulletPrefab;
+    public GameObject rayPrefab;
 
     // Update is called once per frame
     void Update () {
@@ -40,9 +41,6 @@ public class shipMovement : MonoBehaviour {
             ++i;
         }
 
-	if (Input.GetKeyDown("space")) {
-	    shootBullet();
-	}
     }
 
     Vector2 getTouchPosition(Vector2 touchPosition){
@@ -55,6 +53,10 @@ public class shipMovement : MonoBehaviour {
 
     public void shootBullet() {
 	GameObject b = Instantiate(bulletPrefab) as GameObject;
+	b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
+    }
+    public void shootRay() {
+        GameObject b = Instantiate(rayPrefab) as GameObject;
 	b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
     }
 }

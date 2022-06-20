@@ -28,7 +28,11 @@ public class verifyWord : MonoBehaviour
 		};
 
 		if(fixedLine.Contains(wordTextStr)) {
-        	    wordText.color = Color.green;
+        	wordText.color = Color.blue;
+		    wordExists = true;
+		}
+		if(line == wordTextStr){
+			wordText.color = Color.green;
 		    wordExists = true;
 		    break;
 		}
