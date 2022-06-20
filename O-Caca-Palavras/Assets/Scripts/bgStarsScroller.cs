@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bg_starsScroller : MonoBehaviour
+public class bgStarsScroller : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

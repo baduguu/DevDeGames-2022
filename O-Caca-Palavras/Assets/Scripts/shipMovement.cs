@@ -12,7 +12,8 @@ public class shipMovement : MonoBehaviour {
     private Vector2 startingPoint;
     private int leftTouch = 99;
 
-    
+    public GameObject bulletPrefab;
+
     // Update is called once per frame
     void Update () {
         int i = 0;
@@ -39,12 +40,21 @@ public class shipMovement : MonoBehaviour {
             ++i;
         }
 
+	if (Input.GetKeyDown("space")) {
+	    shootBullet();
+	}
     }
+
     Vector2 getTouchPosition(Vector2 touchPosition){
         return GetComponent<Camera>().ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, transform.position.z));
     }
 
     void moveCharacter(Vector2 direction){
         player.Translate(direction * speed * Time.deltaTime);
+    }
+
+    public void shootBullet() {
+	GameObject b = Instantiate(bulletPrefab) as GameObject;
+	b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
     }
 }

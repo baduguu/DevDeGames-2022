@@ -119,10 +119,10 @@ TextureImporter:
       name: beams_0
       rect:
         serializedVersion: 2
-        x: 30
-        y: 244
-        width: 31
-        height: 38
+        x: 37
+        y: 248
+        width: 21
+        height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: beams_1
       rect:
         serializedVersion: 2
-        x: 34
-        y: 355
-        width: 28
-        height: 38
+        x: 37
+        y: 361
+        width: 21
+        height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
