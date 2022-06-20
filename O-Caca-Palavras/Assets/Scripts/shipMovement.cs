@@ -15,6 +15,9 @@ public class shipMovement : MonoBehaviour {
     public GameObject bulletPrefab;
     public GameObject rayPrefab;
 
+    public AudioSource bulletSound;
+    public AudioSource raySound;
+
     // Update is called once per frame
     void Update () {
         int i = 0;
@@ -52,11 +55,13 @@ public class shipMovement : MonoBehaviour {
     }
 
     public void shootBullet() {
-	GameObject b = Instantiate(bulletPrefab) as GameObject;
-	b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
+        bulletSound.Play();
+	    GameObject b = Instantiate(bulletPrefab) as GameObject;
+	    b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
     }
     public void shootRay() {
+        raySound.Play();
         GameObject b = Instantiate(rayPrefab) as GameObject;
-	b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
+	    b.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.7f, player.transform.position.z);
     }
 }

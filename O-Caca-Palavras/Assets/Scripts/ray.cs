@@ -24,7 +24,7 @@ public class ray : MonoBehaviour
         if (transform.position.y > screenBounds.y) {
 	    Destroy(this.gameObject);
 	    }
-        stretch += 1f;
+        stretch += 0.7f;
        transform.localScale = new Vector2(transform.localScale.x, stretch);
     }
 
